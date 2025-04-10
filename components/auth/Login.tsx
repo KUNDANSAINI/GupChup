@@ -1,0 +1,166 @@
+'use client'
+
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { backend_url } from "@/utils/API";
+import { IconEye, IconEyeOff, IconFingerprint } from "@tabler/icons-react";
+import axios from "axios";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+
+export default function LoginPage() {
+    const router = useRouter()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [check, setCheck] = useState<boolean>(false)
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleLogin = async () => {
+        if (!email) {
+            return toast.error("Please enter your email ?")
+        }
+        if (!password) {
+            return toast.error("Please enter your password ?")
+        }
+        if (!check) {
+            return toast.error("Confirm your email and password")
+        }
+        try {
+            const data = { email, password }
+            const response = await axios.post(`${backend_url}/api/login`, data)
+            if(response.status === 201){
+                toast.success(response.data.message)
+                router.push('/')
+            }
+        } catch (error: any) {
+            console.log("login error:", error);
+            toast.error(error?.response?.data?.message || "Something Went Wrong, Please Try Again ?")
+        }
+    }
+
+    return (
+        <div
+            className="h-screen w-full py-6"
+            style={{
+                backgroundImage: "url('https://4kwallpapers.com/images/walls/thumbs_3t/19801.jpg')",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center"
+            }}
+        >
+            <div className="flex h-full w-full items-center justify-center">
+                {/* Main Container with Border */}
+                <div className="flex h-full w-3/4 mx-auto rounded-3xl border-[6px] border-white dark:border-accent">
+                    {/* Left Section - Transparent */}
+                    <div className="flex w-1/2 p-12 rounded-3xl bg-transparent">
+                        <div className="flex flex-col justify-between space-y-6 text-white">
+                            <div className="flex items-center gap-4">
+                                <h2 className="font-bold text-sm">A WISE QUOTE</h2>
+                                <div className="w-40 h-[1px] bg-white"></div>
+                            </div>
+                            <div className="space-y-4">
+                                <p className="text-4xl font-semibold">Get<br />Everything<br />You Want</p>
+                                <p>
+                                    You can get everything you want if you work hard,<br />
+                                    trust the process, and stick to the plan.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right Section - Opaque White */}
+                    <div className="flex flex-col border w-1/2 items-center justify-center bg-white dark:bg-accent p-12 rounded-r-md">
+                        {/* <div className=" fixed top-[50%] left-[75%] flex gap-1 items-center">
+                            <IconFingerprint stroke={2} width={24} height={24} />
+                            <h2>GupChup</h2>
+                        </div> */}
+                        <div className="w-full max-w-md space-y-10">
+                            <div className="space-y-2">
+                                <h2 className="text-3xl font-bold text-center">Welcome Back</h2>
+                                <p className="text-center text-sm">Enter your email and password to access your account</p>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div>
+                                    <label className="mb-2 block text-sm font-medium">Email</label>
+                                    <Input
+                                        type="email"
+                                        placeholder="Enter your email"
+                                        value={email}
+                                        onChange={(e) => { setEmail(e.target.value) }}
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="mb-2 block text-sm font-medium">Password</label>
+                                    <div className=" relative">
+                                        <Input
+                                            type={showPassword ? "text" : "password"}
+                                            placeholder="Enter your password"
+                                            value={password}
+                                            onChange={(e) => { setPassword(e.target.value) }}
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-sm cursor-pointer"
+                                        >
+                                            {showPassword ? <IconEyeOff stroke={2} size={20} /> : <IconEye stroke={2} size={20} />}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center space-x-2">
+                                        <Checkbox
+                                            checked={check}
+                                            onCheckedChange={(value: boolean) => setCheck(value)}
+                                            className=" cursor-pointer"
+                                        />
+                                        <label
+                                            htmlFor="Remember"
+                                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        >
+                                            Remember me
+                                        </label>
+                                    </div>
+                                    <Link href={"#"} className="text-sm hover:underline">Forgot Password</Link>
+                                </div>
+                                <Button className="w-full cursor-pointer" onClick={handleLogin}>Sign In</Button>
+                            </div>
+
+                            <div className="relative">
+                                <div className="absolute inset-0 flex items-center">
+                                    <div className="w-full border-t border-gray-300"></div>
+                                </div>
+                                <div className="relative flex justify-center text-sm">
+                                    <span className="bg-white dark:bg-accent px-2">Or continue with</span>
+                                </div>
+                            </div>
+
+                            <Button variant={"ghost"} className="flex w-full items-center justify-center space-x-2 cursor-pointer">
+                                <svg className="h-5 w-5" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20.308 10.23c0-.68-.055-1.363-.173-2.032H10.7v3.851h5.402a4.628 4.628 0 01-2 3.039v2.499h3.223c1.893-1.742 2.983-4.315 2.983-7.357z" fill="#4285F4" />
+                                    <path d="M10.7 20c2.7 0 4.963-.894 6.618-2.423l-3.223-2.5c-.896.61-2.054.955-3.395.955-2.605 0-4.81-1.76-5.595-4.123H1.765v2.576A10.001 10.001 0 0010.7 20z" fill="#34A853" />
+                                    <path d="M5.105 11.917a5.989 5.989 0 010-3.829V5.512H1.766a10.009 10.009 0 000 8.98l3.339-2.575z" fill="#FBBC04" />
+                                    <path d="M10.7 3.958a5.434 5.434 0 013.836 1.5l2.855-2.856A9.611 9.611 0 0010.7 0 10.001 10.001 0 001.766 5.512l3.339 2.576c.785-2.364 2.99-4.13 5.595-4.13z" fill="#EA4335" />
+                                </svg>
+                                <span>Sign In with Google</span>
+                            </Button>
+
+                            <p className="text-center text-sm">
+                                Don't have an account?{' '}
+                                <Button variant={"link"} className="font-medium px-0 text-blue-600 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/auth/signup')}>
+                                    Sign Up
+                                </Button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
