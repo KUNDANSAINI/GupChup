@@ -1,10 +1,9 @@
 "use client";
-import { IconAlignLeft, IconBrandLine, IconChartArcs, IconDeviceLaptop, IconMoonStars, IconNorthStar, IconPhoneSpark, IconSparkles, IconSun } from "@tabler/icons-react";
+import { IconAlignLeft, IconBrandLine, IconChartArcs, IconMoonStars, IconPhoneSpark, IconSun } from "@tabler/icons-react";
 import Link from "next/link";
 import { useState } from "react";
-import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
-import { Sparkle, Sparkles, UserRound } from "lucide-react";
+import { Sparkles, UserRound } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 

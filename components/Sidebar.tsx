@@ -3,9 +3,8 @@
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
-import { Circle } from "lucide-react";
 import { IconPlus } from "@tabler/icons-react";
+import Image from "next/image";
 
 type User = {
     id: number;
@@ -61,8 +60,8 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({ onSelectUser }) => {
                             <div className="flex items-center gap-2 p-3">
                                 {/* Image container */}
                                 <div className="relative">
-                                    <img
-                                        src="https://imgs.search.brave.com/d-Ko-GY3RysXK7ODXK88D4ZaZZOWaICEHZ8U2onjEa4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA5LzQwLzk4Lzc2/LzM2MF9GXzk0MDk4/NzY5M19wMzI5TjJk/RkNXN2pHN1lxdDNr/NUg5ZHhLb1lxS1NJ/US5qcGc"
+                                    <Image
+                                        src="/images/profile.webp"
                                         alt="user"
                                         width={40}
                                         height={40}

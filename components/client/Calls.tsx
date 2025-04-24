@@ -2,6 +2,7 @@
 
 import CallSidebar from "@/components/CallSideBar";
 import { MoveDownLeft, MoveUpRight } from "lucide-react";
+import Image from "next/image";
 
 interface Call {
     id: number;
@@ -34,8 +35,8 @@ function CallPage() {
                         {callHistory.map((call) => (
                             <div key={call.id} className="flex items-center justify-between py-3">
                                 <div className="flex items-center space-x-4">
-                                    <img
-                                        src="https://imgs.search.brave.com/d-Ko-GY3RysXK7ODXK88D4ZaZZOWaICEHZ8U2onjEa4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA5LzQwLzk4Lzc2/LzM2MF9GXzk0MDk4/NzY5M19wMzI5TjJk/RkNXN2pHN1lxdDNr/NUg5ZHhLb1lxS1NJ/US5qcGc"
+                                    <Image
+                                        src="/images/profile.webp"
                                         alt="user"
                                         width={40}
                                         height={40}

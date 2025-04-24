@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { backend_url } from "@/utils/API";
-import { IconEye, IconEyeOff, IconFingerprint } from "@tabler/icons-react";
+import { IconEye, IconEyeOff } from "@tabler/icons-react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -31,13 +31,17 @@ export default function LoginPage() {
         try {
             const data = { email, password }
             const response = await axios.post(`${backend_url}/api/login`, data)
-            if(response.status === 201){
+            if (response.status === 201) {
                 toast.success(response.data.message)
                 router.push('/')
             }
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.log("login error:", error);
-            toast.error(error?.response?.data?.message || "Something Went Wrong, Please Try Again ?")
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message || "Something Went Wrong, Please Try Again ❓");
+            } else {
+                toast.error("An unexpected error occurred.");
+            }
         }
     }
 
@@ -152,7 +156,7 @@ export default function LoginPage() {
                             </Button>
 
                             <p className="text-center text-sm">
-                                Don't have an account?{' '}
+                                Don&apos;t have an account?{' '}
                                 <Button variant={"link"} className="font-medium px-0 text-blue-600 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/auth/signup')}>
                                     Sign Up
                                 </Button>

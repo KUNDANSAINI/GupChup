@@ -3,9 +3,8 @@
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
-import { Circle } from "lucide-react";
-import { IconAddressBook, IconPhonePlus, IconPlus } from "@tabler/icons-react";
+import { IconAddressBook, IconPhonePlus } from "@tabler/icons-react";
+import Image from "next/image";
 
 interface Call {
     id: number;
@@ -56,8 +55,8 @@ const CallSidebar: React.FC = () => {
                         >
                             <div className="flex items-center justify-between p-3">
                                 <div className="flex items-center gap-2">
-                                    <img
-                                        src="https://imgs.search.brave.com/d-Ko-GY3RysXK7ODXK88D4ZaZZOWaICEHZ8U2onjEa4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA5LzQwLzk4Lzc2/LzM2MF9GXzk0MDk4/NzY5M19wMzI5TjJk/RkNXN2pHN1lxdDNr/NUg5ZHhLb1lxS1NJ/US5qcGc"
+                                    <Image
+                                        src="/images/profile.webp"
                                         alt="user"
                                         width={40}
                                         height={40}

@@ -1,9 +1,8 @@
 'use client'
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp";
 import ValidPhone from "../include/ValidPhone";
@@ -55,9 +54,13 @@ export default function SignupPage() {
                 toast.success(response.data.message)
                 setActiveStep(1)
             }
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("OTP send error:", error)
-            toast.error(error.response?.data?.message || "Failed to send OTP")
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message || "Something Went Wrong, Please Try Again ❓");
+            } else {
+                toast.error("An unexpected error occurred.");
+            }
         }
     }
 
@@ -73,9 +76,13 @@ export default function SignupPage() {
                 toast.success(response.data.message)
                 router.push('/')
             }
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("OTP verification error:", error)
-            toast.error(error.response?.data?.message || "Invalid OTP")
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message || "Something Went Wrong, Please Try Again ❓");
+            } else {
+                toast.error("An unexpected error occurred.");
+            }
         }
     };
 
